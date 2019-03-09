@@ -1,4 +1,5 @@
 UPDATE products
-SET name =$2,
-    img =$3,
-    price =$4
+SET name =$1,
+    img =$2,
+    price =$3
+WHERE id=$4

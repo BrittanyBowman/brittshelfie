@@ -18,18 +18,17 @@ class App extends Component {
       currentProduct: {}
     }
 
-    this.getInventory = this.getInventory.bind(this);
-    this.editSelect = this.editSelect.bind(this);
+    // this.getInventory = this.getInventory.bind(this);
+    // this.editSelect = this.editSelect.bind(this);
   }
-//step 4. You want this method to fire as soon as the user opens your page, so invoke it in the lifecycle method that fires as soon as the component loads.
   componentDidMount() {
     this.getInventory();
   }
-  //Step 4. Write a method in App that makes a GET request to the endpoint you just wrote. Once the response comes back from the server, update state with the inventory list you got from the database.
-  getInventory(){
+  
+  getInventory=()=>{
     axios.get('/api/inventory').then(res => this.setState({inventory:res.data}))
   }
-  editSelect(product){
+  editSelect=(product) =>{
     this.setState({
       currentProduct: product
     })

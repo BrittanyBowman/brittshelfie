@@ -28,7 +28,7 @@ componentDidMount() {
   imageInput(url) {
     this.setState({ img: url });
   }
-  // Setting the new product selection on state
+  
   componentDidUpdate(oldProps) {
     if( this.props.match.path !== oldProps.match.path) {
       this.setState({
@@ -46,7 +46,8 @@ componentDidMount() {
   }
   
   handleEdit() {
-    let { id, name, price, img } = this.state;
+    let {id} = this.props.match.params;
+    let { name, price, img } = this.state;
     if (name) {
       let product = {
         name,

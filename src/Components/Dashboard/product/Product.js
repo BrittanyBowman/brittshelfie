@@ -3,7 +3,6 @@ import './product.css';
 import {withRouter} from 'react-router-dom';
 
 function Product(props) {
-  // console.log(props);
   let { id, img, name, price } = props.item;
   if (img === null) img = 'https://www.freeiconspng.com/uploads/no-image-icon-1.jpg';
   

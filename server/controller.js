@@ -36,7 +36,7 @@ module.exports = {
 
     req.app
       .get("db")
-      .update_product([id, name, img, price])
+      .update_product([id, name, price, img])
       .then(product => {
         res.status(200).send(product);
       })
