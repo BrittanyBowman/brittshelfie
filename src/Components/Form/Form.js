@@ -16,10 +16,11 @@ export class Form extends Component {
   }
 componentDidMount() {
   let {id} = this.props.match.params;
+  // console.log(this.props.match.params);
   if (id) {
-    axios.get(`api/products/${id}`)
+    axios.get(`api/inventory/${id}`)
       .then(res => {
-        this.setState({...res.data, edit:true})
+        this.setState({id: res.data.id, name: res.data.name, price: res.data.price, img: res.data.img, edit: true})
       })
   }
 }
@@ -27,7 +28,7 @@ componentDidMount() {
   imageInput(url) {
     this.setState({ img: url });
   }
-  //Setting the new product selection on state
+  // Setting the new product selection on state
   componentDidUpdate(oldProps) {
     if( this.props.match.path !== oldProps.match.path) {
       this.setState({
@@ -37,13 +38,13 @@ componentDidMount() {
       })
     }
   }
-  //item name input function, allows names up to 25 characters on the form
+  
   inputName(text) {
-    if (text.length <= 25) {
+    if (text.length <= 45) {
       this.setState({ name: text });
     }
   }
-  // handles editing/updating of product information in form input (on product?)
+  
   handleEdit() {
     let { id, name, price, img } = this.state;
     if (name) {
@@ -52,13 +53,11 @@ componentDidMount() {
         price: this.numberSubmit(price),
         img
       };
-      axios.put(`/api/products/${id}`, product)
+      axios.put(`/api/inventory/${id}`, product)
       .then(res => {
         this.props.history.push('/');
       })
-      .catch(err => console.log('update error', err))
-  } else {
-    console.log('Error! Missing name!');
+      .catch(err => console.log(err));  
   }
 }
   //send new product function
@@ -71,16 +70,15 @@ componentDidMount() {
         img
       };
       axios
-        .post('/api/products', product)
+        .post('/api/inventory', product)
         .then(res => {
           this.props.history.push('/');
         })
-        .catch(err => console.log('create error', err))
-    } else {
-      console.log("failure, retry");
-    }
+        .catch(err => console.log(err));
+    } 
+    
   }
-  //button function clears the forms on 'cancel' - once I changed this to the step 3 routing I did not understand it. match.params.id? I get the props.history.push. Also, it messed up my URL form. 
+  //button function clears the forms  
   clearInputs() {
     if (this.props.match.params.id) {
       this.props.history.push('/');
@@ -94,8 +92,7 @@ componentDidMount() {
     }
   }
 
-  //Lots of crazy math and logic crap to make the $dollar work in this input form (found with source) DOES NOT WORK.
-
+ //number input for price and value
   inputNum(val) {
     this.setState({ price: val });
   }
@@ -141,7 +138,6 @@ componentDidMount() {
           <h4>PRICE</h4>
           <input
             type="text"
-            // pattern="[0-9]*"
             value={this.state.price}
             onChange={e => this.inputNum(e.target.value)}
           />
@@ -149,9 +145,7 @@ componentDidMount() {
             <button onClick={() => this.clearInputs()}>Cancel</button>
             {this.state.edit
              ? <button onClick={() => this.handleEdit()}>Save Changes</button>
-             : <button onClick={() => this.handleSubmit()}>
-                Add to Inventory
-              </button>
+             : <button onClick={() => this.handleSubmit()}>Add to Inventory</button>
             }
           </div>
         </form>

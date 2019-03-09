@@ -1,2 +1,1 @@
-SELECT * FROM products
-WHERE product_id = $1;
+SELECT * from products WHERE id =$1

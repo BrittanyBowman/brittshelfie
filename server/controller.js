@@ -1,47 +1,48 @@
 module.exports = {
   //create product, function
   create: (req, res) => {
-    let { name, price, img, product_id:id } = req.body;
-    console.log(req.body);
+    let { name, img, price } = req.body;
 
     req.app
       .get("db")
-      .create_product({ id, name, img, price })
+      .create_product([name, img, price])
       .then(() => {
-        res.status(200).send("Created product");
+        res.status(200).send();
       })
-      .catch((error) => {
-        res.status(500).send("Failed at creating, try again", error);
-        console.log(error);
+      .catch(error => {
+        console.log({ error });
+        res.status(500).send(error);
       });
   },
   //Delete Product, function
   delete: (req, res) => {
-    let {id} = req.params;
+    let { id } = req.params;
 
     req.app
       .get("db")
-      .delete_product({id})
+      .delete_product([id])
       .then(() => {
-        res.status(200).send("Deleted product");
+        res.status(200).send();
       })
-      .catch(() => {
-        res.status(500).send("Failed at deleting product");
+      .catch(err => {
+        console.log({ err });
+        res.status(500).send(err);
       });
   },
   //Update Product, function
   update: (req, res) => {
-    let { id } = req.params;
-    let { name } = req.query;
+    let { name, img, price } = req.body;
+    const { id } = req.params;
 
     req.app
       .get("db")
-      .update_product({name, id})
-      .then(() => {
-        res.status(200).send("Updated content");
+      .update_product([id, name, img, price])
+      .then(product => {
+        res.status(200).send(product);
       })
-      .catch(() => {
-        res.status(500).send("Failed To Edit");
+      .catch(err => {
+        console.log({ err });
+        res.status(500).send(err);
       });
   },
   // READ one
@@ -50,13 +51,13 @@ module.exports = {
 
     req.app
       .get("db")
-      .get_product({id})
+      .get_product([id])
       .then(product => {
         res.status(200).send(product);
       })
       .catch(error => {
-        res.status(500).send("Could not get inventory", error);
-        console.log(error);
+        res.status(500).send(error);
+        console.log({ error });
       });
   },
   //READ all
@@ -68,8 +69,8 @@ module.exports = {
         res.status(200).send(products);
       })
       .catch(error => {
-        res.status(500).send("Could not get inventory", error);
-        console.log(error);
+        res.status(500).send(error);
+        console.log({ error });
       });
   }
 };

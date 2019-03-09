@@ -4,7 +4,7 @@ import {withRouter} from 'react-router-dom';
 
 function Product(props) {
   // console.log(props);
-  let { id, name, price, img } = props.item;
+  let { id, img, name, price } = props.item;
   if (img === null) img = 'https://www.freeiconspng.com/uploads/no-image-icon-1.jpg';
   
   return (
@@ -18,7 +18,7 @@ function Product(props) {
       </div>
       <div className='product_button_box'>
         <button onClick={() => props.deleteProduct(id)}>Delete</button>
-        <button onClick={() => props.history.push(`/edit/${props.item.id}`)}>Edit</button>
+        <button onClick={() => props.history.push(`/edit/${id}`)}>Edit</button>
       </div>
     </div>
   )

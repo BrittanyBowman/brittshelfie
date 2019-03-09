@@ -10,21 +10,19 @@ export class Dashboard extends Component {
     this.state = {
       inventory: []
     }
-    this.getInventory = this.getInventory.bind(this);
-    this.deleteProduct = this.deleteProduct.bind(this);
   }
   componentDidMount() {
     this.getInventory();
   }
-  getInventory() {
-    axios.get('/api/products')
+  getInventory=() => {
+    axios.get('/api/inventory')
       .then(res => this.setState({ inventory: res.data }))
   }
-  deleteProduct(id) {
+  deleteProduct=(id) => {
     axios
-      .delete(`/api/products/${id}`)
+      .delete(`/api/inventory/${id}`)
       .then(res => this.props.getInventory())
-      .catch(err => console.log("deletion error", err));
+      .catch(err => console.log(err));
   }
 //add delete and edit functionality
   render() {
@@ -32,11 +30,16 @@ export class Dashboard extends Component {
       <div className="Dash" >
         <h1>DASHBOARD</h1>
         {this.state.inventory.map((el) => {
+          
           return <Product key={el.id} item={el} deleteProduct={this.deleteProduct} />
         })}
+        {Product}
       </div>
+      
     );
-  }
+    
+      }
+      
 }
 
 export default Dashboard;

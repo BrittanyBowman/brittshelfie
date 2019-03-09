@@ -7,6 +7,7 @@ import Dashboard from './Components/dashboard/Dashboard';
 import Form from './Components/form/Form';
 
 import './App.css';
+// import './Routes.js';
 
 class App extends Component {
   constructor(props) {
@@ -26,7 +27,7 @@ class App extends Component {
   }
   //Step 4. Write a method in App that makes a GET request to the endpoint you just wrote. Once the response comes back from the server, update state with the inventory list you got from the database.
   getInventory(){
-    axios.get('/api/products').then(res => this.setState({inventory:res.data}))
+    axios.get('/api/inventory').then(res => this.setState({inventory:res.data}))
   }
   editSelect(product){
     this.setState({

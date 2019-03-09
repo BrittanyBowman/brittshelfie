@@ -1,4 +1,4 @@
-INSERT INTO products
-(product_id, name, price, img)
+INSERT INTO products 
+(name, img, price)
 VALUES
-(${id}, ${name}, ${price}, ${img});
+($1, $2, $3)
